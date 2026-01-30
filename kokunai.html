@@ -46,7 +46,8 @@
                 <option value="大阪">大阪府</option>
                 <option value="愛知">愛知県</option>
                 <option value="福岡">福岡県</option>
-                <option value="北海道">北海道</option>
+                <option value="千葉">千葉県</option>
+                <option value="埼玉">埼玉県</option>
             </select>
         </div>
         <div class="search-group">
@@ -84,18 +85,17 @@
 </div>
 
 <script>
-    // 指定のスプレッドシートIDとGIDを使用
-    const sheetId = '18CZn2VzrbRVtRitkR5VDJEarSCoufOd4vomWT2S3lIw';
-    const gid = '126383559';
+    // 指定された新しいスプレッドシートのIDとGID
+    const sheetId = '161ifMCpUobZ3fIkiAs0QZpd1kl8bR5nr6TdijcVVRU4';
+    const gid = '191070007';
     const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
 
     async function loadProperties() {
         try {
             const response = await fetch(csvUrl);
-            if (!response.ok) throw new Error('Network response was not ok');
+            if (!response.ok) throw new Error('公開設定を確認してください');
             const csvText = await response.text();
             
-            // CSV解析
             const rows = csvText.split(/\r?\n/).filter(row => row.trim() !== "");
             const grid = document.getElementById('grid');
             grid.innerHTML = "";
@@ -135,7 +135,7 @@
             }
             filterProperties();
         } catch (e) {
-            document.getElementById('grid').innerHTML = "<div class='loading' style='color:red;'>データの読み込みに失敗しました。スプレッドシートの「ウェブに公開」設定を確認してください。</div>";
+            document.getElementById('grid').innerHTML = "<div class='loading' style='color:red;'>物件データを読み込めません。スプレッドシートの「ウェブに公開」設定を完了させてください。</div>";
         }
     }
 
