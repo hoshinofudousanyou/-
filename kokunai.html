@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>国内不動産・収益物件検索</title>
     <style>
-        /* 国内版：信頼感のあるネイビーとアクセントのオレンジ */
         :root {
             --primary: #1a365d;
             --accent: #ff6b00;
@@ -15,6 +14,28 @@
         body { font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif; background-color: var(--bg-gray); margin: 0; padding: 20px; color: #333; }
         .container { max-width: 1200px; margin: 0 auto; }
         
+        /* 戻るボタン専用スタイル */
+        .home-back-nav {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .btn-home {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid var(--primary);
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            background: white;
+        }
+        .btn-home:hover {
+            background: var(--primary);
+            color: white;
+        }
+
         /* 検索ボックス */
         .search-container {
             background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.08);
@@ -26,12 +47,10 @@
         
         h1 { text-align: left; color: var(--primary); border-left: 6px solid var(--primary); padding-left: 15px; margin-bottom: 25px; font-size: 24px; }
 
-        /* グリッドレイアウト */
         .property-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px;
         }
 
-        /* 物件カード */
         .card {
             background: white; border: 1px solid #e1e4e8; border-radius: 8px; overflow: hidden;
             transition: all 0.3s ease; cursor: pointer; display: flex; flex-direction: column;
@@ -47,7 +66,6 @@
         .title { font-size: 17px; font-weight: bold; line-height: 1.5; margin-bottom: 12px; color: #2d3748; height: 50px; overflow: hidden; }
         .price { font-size: 24px; color: #d31212; font-weight: bold; }
 
-        /* 詳細画面 */
         #detail-view { display: none; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         .back-btn { cursor: pointer; color: var(--primary); font-weight: bold; margin-bottom: 25px; display: inline-block; }
         .spec-table { width: 100%; border-collapse: collapse; margin-top: 25px; }
@@ -61,10 +79,8 @@
 <body>
 
 <div class="container" id="main-list">
-    <div style="margin-bottom: 20px;">
-        <a href="index.html" style="text-decoration: none; color: var(--primary); font-size: 14px; display: inline-flex; align-items: center; gap: 5px; font-weight: bold;">
-            🏠 ホームへ戻る
-        </a>
+    <div class="home-back-nav">
+        <a href="index.html" class="btn-home">🏠 ホームに戻る</a>
     </div>
 
     <h1>国内収益不動産 特選ラインナップ</h1>
@@ -105,7 +121,7 @@
 <div class="container" id="detail-view">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
         <div class="back-btn" onclick="showList()" style="margin-bottom: 0;">← 物件一覧に戻る</div>
-        <a href="index.html" style="text-decoration: none; color: var(--primary); font-weight: bold; font-size: 14px;">🏠 ホームに戻る</a>
+        <a href="index.html" class="btn-home" style="padding: 5px 12px; font-size: 12px;">🏠 ホームに戻る</a>
     </div>
 
     <h1 id="det-title"></h1>
@@ -127,8 +143,10 @@
 </div>
 
 <script>
-    // 更新された国内版スプレッドシートのCSV URL
-    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS9kOrA9rWRF7KPmyb0qRRgLvvhH2OrNZzwa0bNg23Dts2ss4nth1BTe_ptE2atqHWJySXqfXFrBN4F/pub?gid=1375938058&single=true&output=csv";
+    // 指定のスプレッドシートIDとGIDを使用
+    const sheetId = '161ifMCpUobZ3fIkiAs0QZpd1kl8bR5nr6TdijcVVRU4';
+    const gid = '191070007';
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
 
     async function loadProperties() {
         try {
@@ -141,36 +159,20 @@
             for (let i = 1; i < rows.length; i++) {
                 const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 if (cols.length < 5) continue;
-
                 const clean = (val) => (val || "").replace(/^"|"$/g, "").trim();
-
-                const name   = clean(cols[0]); 
-                const price  = clean(cols[1]); 
-                const yieldV = clean(cols[2]); 
-                const area   = clean(cols[3]); 
-                const type   = clean(cols[4]); 
-                const struct = clean(cols[5]); 
-                const img    = clean(cols[6]); 
-                const desc   = clean(cols[7]); 
+                const name = clean(cols[0]); const price = clean(cols[1]); const yieldV = clean(cols[2]); 
+                const area = clean(cols[3]); const type = clean(cols[4]); const struct = clean(cols[5]); 
+                const img = clean(cols[6]); const desc = clean(cols[7]); 
 
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.setAttribute('data-area', area);
                 card.setAttribute('data-type', type);
-                
                 card.innerHTML = `
-                    <div class="image-box">
-                        <div class="yield-badge">利回り ${yieldV}</div>
-                        <img class="property-img" src="${img}" alt="${name}" onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'">
-                    </div>
-                    <div class="content">
-                        <div class="type-tag">${type}</div>
-                        <div class="title">${name}</div>
-                        <div class="price">${price}</div>
-                        <div style="font-size:12px; color:#666; margin-top:10px;">📍 ${area}</div>
-                    </div>
-                `;
-
+                    <div class="image-box"><div class="yield-badge">利回り ${yieldV}</div>
+                    <img class="property-img" src="${img}" onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'"></div>
+                    <div class="content"><div class="type-tag">${type}</div><div class="title">${name}</div><div class="price">${price}</div>
+                    <div style="font-size:12px; color:#666; margin-top:10px;">📍 ${area}</div></div>`;
                 card.onclick = () => showDetail(name, price, yieldV, area, type, struct, img, desc);
                 grid.appendChild(card);
             }
@@ -205,23 +207,15 @@
         const typeFilter = document.getElementById('filter-type').value;
         const cards = document.querySelectorAll('.card');
         let count = 0;
-
         cards.forEach(card => {
             const area = card.getAttribute('data-area') || "";
             const type = card.getAttribute('data-type') || "";
-            const areaMatch = (areaFilter === 'all' || area.includes(areaFilter));
-            const typeMatch = (typeFilter === 'all' || type === typeFilter);
-
-            if (areaMatch && typeMatch) {
-                card.style.display = 'flex';
-                count++;
-            } else {
-                card.style.display = 'none';
-            }
+            if ((areaFilter === 'all' || area.includes(areaFilter)) && (typeFilter === 'all' || type === typeFilter)) {
+                card.style.display = 'flex'; count++;
+            } else { card.style.display = 'none'; }
         });
         document.getElementById('count-display').innerText = `該当物件: ${count}件`;
     }
-
     loadProperties();
 </script>
 </body>
