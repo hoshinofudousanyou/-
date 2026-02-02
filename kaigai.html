@@ -119,13 +119,13 @@
             <tr><th>想定表面利回り</th><td id="det-yield" style="color:#d31212; font-weight:bold;"></td></tr>
             <tr><th>物件詳細説明</th><td id="det-desc"></td></tr>
         </table>
-        <button class="inquiry-btn">資料請求・お問い合わせ（無料）</button>
+        <button class="inquiry-btn" id="inquiry-button">資料請求・お問い合わせ（無料）</button>
     </div>
 </div>
 
 <script>
-    // CSV URL
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS9kOrA9rWRF7KPmyb0qRRgLvvhH2OrNZzwa0bNg23Dts2ss4nth1BTe_ptE2atqHWJySXqfXFrBN4F/pub?gid=1375938058&single=true&output=csv";
+    const formUrl = "https://form.run/@goodfellows-toushiotoiawase"; // formrunのURL
 
     async function loadProperties() {
         try {
@@ -138,23 +138,15 @@
             for (let i = 1; i < rows.length; i++) {
                 const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 if (cols.length < 5) continue;
-
                 const clean = (val) => (val || "").replace(/^"|"$/g, "").trim();
-
-                const name   = clean(cols[0]); 
-                const price  = clean(cols[1]); 
-                const yieldV = clean(cols[2]); 
-                const area   = clean(cols[3]); 
-                const dev    = clean(cols[4]); 
-                const status = clean(cols[5]); 
-                const img    = clean(cols[6]); 
-                const desc   = clean(cols[7]); 
+                const name = clean(cols[0]); const price = clean(cols[1]); const yieldV = clean(cols[2]); 
+                const area = clean(cols[3]); const dev = clean(cols[4]); const status = clean(cols[5]); 
+                const img = clean(cols[6]); const desc = clean(cols[7]); 
 
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.setAttribute('data-country', area);
                 card.setAttribute('data-status', status);
-                
                 card.innerHTML = `
                     <div class="image-box">
                         <div class="yield-badge">利回り ${yieldV}</div>
@@ -162,19 +154,13 @@
                         <img class="property-img" src="${img}" alt="${name}" onerror="this.src='https://via.placeholder.com/600x400?text=Image+Unavailable'">
                     </div>
                     <div class="content">
-                        <div class="dev-name">${dev}</div>
-                        <div class="title">${name}</div>
-                        <div class="price">${price}</div>
-                        <div class="loc-info">📍 ${area}</div>
-                    </div>
-                `;
-
+                        <div class="dev-name">${dev}</div><div class="title">${name}</div><div class="price">${price}</div><div class="loc-info">📍 ${area}</div>
+                    </div>`;
                 card.onclick = () => showDetail(name, price, yieldV, area, dev, status, img, desc);
                 grid.appendChild(card);
             }
             filterProperties();
         } catch (e) {
-            console.error("Fetch Error:", e);
             document.getElementById('grid').innerHTML = "<div class='loading' style='color:red;'>データの取得に失敗しました。</div>";
         }
     }
@@ -190,6 +176,16 @@
         document.getElementById('det-status').innerText = status;
         document.getElementById('det-desc').innerText = desc || "詳細はお問い合わせください。";
         document.getElementById('det-img-box').innerHTML = `<img src="${img}" class="property-img" onerror="this.src='https://via.placeholder.com/800x600?text=Image+Unavailable'">`;
+        
+        // --- 修正箇所：ボタンクリック時に物件名を自動入力して飛ばす ---
+        const btn = document.getElementById('inquiry-button');
+        btn.onclick = function() {
+            // formrunのURLに物件名（title）をパラメータとして付けて飛ばす
+            // ?物件名=... の部分はformrun側の「項目名」に合わせて調整可能です
+            const targetUrl = `${formUrl}?_field_6=${encodeURIComponent(title)}`; 
+            window.open(targetUrl, '_blank');
+        };
+
         window.scrollTo(0,0);
     }
 
@@ -204,27 +200,16 @@
         const statusFilter = document.getElementById('filter-status').value;
         const cards = document.querySelectorAll('.card');
         let count = 0;
-
         cards.forEach(card => {
             const country = card.getAttribute('data-country') || "";
             const status = card.getAttribute('data-status') || "";
-            const countryMatch = (countryFilter === 'all' || country.includes(countryFilter));
-            const statusMatch = (statusFilter === 'all' || status === statusFilter);
-
-            if (countryMatch && statusMatch) {
-                card.style.display = 'flex';
-                count++;
-            } else {
-                card.style.display = 'none';
-            }
+            if ((countryFilter === 'all' || country.includes(countryFilter)) && (statusFilter === 'all' || status === statusFilter)) {
+                card.style.display = 'flex'; count++;
+            } else { card.style.display = 'none'; }
         });
         document.getElementById('count-display').innerText = `該当件数: ${count}件`;
     }
-
     loadProperties();
 </script>
 </body>
-
 </html>
-
-
