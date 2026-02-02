@@ -135,8 +135,8 @@
 </div>
 
 <script>
-    // 指定されたスプレッドシートのCSV URL
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR3fWpRRjzL6v1Chh3NX1PebWoHf--6giJkrqRHXqfoDq1gCIcySOaJVqUm7xNfyrwqtC-rvHgU_pt9/pub?gid=0&single=true&output=csv";
+    const formUrl = "https://form.run/@goodfellows-toushiotoiawase";
 
     async function loadProperties() {
         try {
@@ -152,14 +152,14 @@
 
                 const clean = (val) => (val || "").replace(/^"|"$/g, "").trim();
 
-                const name     = clean(cols[0]); // 案件名
-                const price    = clean(cols[1]); // 投資額
-                const yieldV   = clean(cols[2]); // 利回り
-                const category = clean(cols[3]); // カテゴリー（スプレッドシートの「エリア」列を流用想定）
-                const type     = clean(cols[4]); // 投資種別
-                const term     = clean(cols[5]); // 運用期間
-                const img      = clean(cols[6]); // 画像URL
-                const desc     = clean(cols[7]); // 説明
+                const name     = clean(cols[0]); 
+                const price    = clean(cols[1]); 
+                const yieldV   = clean(cols[2]); 
+                const category = clean(cols[3]); 
+                const type     = clean(cols[4]); 
+                const term     = clean(cols[5]); 
+                const img      = clean(cols[6]); 
+                const desc     = clean(cols[7]); 
 
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -195,15 +195,16 @@
         document.getElementById('det-price').innerText = price;
         document.getElementById('det-yield').innerText = yieldV;
         document.getElementById('det-category').innerText = cat;
-        document.getElementById('det-loc').innerText = type; // 種別を所在地項目に表示
+        document.getElementById('det-loc').innerText = type; 
         document.getElementById('det-term').innerText = term;
         document.getElementById('det-desc').innerText = desc || "詳細はお問い合わせください。";
         document.getElementById('det-img-box').innerHTML = `<img src="${img}" class="property-img" onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'">`;
         
-        // 資料請求ボタン（将来的にGoogleフォームやformrunのURLをここに設定）
-        document.getElementById('submit-inquiry').onclick = () => {
-            alert(title + " の資料請求を承ります。フォームへ遷移します。");
-            // window.open("YOUR_FORM_URL", "_blank");
+        // --- 修正箇所：案件名を _field_14 に渡して formrun を開く ---
+        const btn = document.getElementById('submit-inquiry');
+        btn.onclick = () => {
+            const targetUrl = `${formUrl}?_field_14=${encodeURIComponent(title)}`; 
+            window.open(targetUrl, '_blank');
         };
 
         window.scrollTo(0,0);
@@ -237,5 +238,4 @@
     loadProperties();
 </script>
 </body>
-
 </html>
