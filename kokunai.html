@@ -138,15 +138,15 @@
             <tr><th>表面利回り</th><td id="det-yield" style="font-weight:bold; color:var(--accent);"></td></tr>
             <tr><th>物件詳細</th><td id="det-desc"></td></tr>
         </table>
-        <button class="inquiry-btn">資料請求・お問い合わせ（無料）</button>
+        <button class="inquiry-btn" id="inquiry-button">資料請求・お問い合わせ（無料）</button>
     </div>
 </div>
 
 <script>
-    // 指定のスプレッドシートIDとGIDを使用
     const sheetId = '161ifMCpUobZ3fIkiAs0QZpd1kl8bR5nr6TdijcVVRU4';
     const gid = '191070007';
     const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+    const formUrl = "https://form.run/@goodfellows-toushiotoiawase"; 
 
     async function loadProperties() {
         try {
@@ -193,6 +193,14 @@
         document.getElementById('det-struct').innerText = struct;
         document.getElementById('det-desc').innerText = desc || "詳細はお問い合わせください。";
         document.getElementById('det-img-box').innerHTML = `<img src="${img}" class="property-img" onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'">`;
+        
+        // --- 修正箇所：ボタンクリック時に物件名をID _field_14 に自動入力 ---
+        const btn = document.getElementById('inquiry-button');
+        btn.onclick = function() {
+            const targetUrl = `${formUrl}?_field_14=${encodeURIComponent(title)}`; 
+            window.open(targetUrl, '_blank');
+        };
+
         window.scrollTo(0,0);
     }
 
@@ -219,5 +227,4 @@
     loadProperties();
 </script>
 </body>
-
 </html>
