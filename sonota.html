@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>次世代投資・オルタナティブ資産検索</title>
+    <style>
+        /* その他投資版：先進性と多様性を表すディープパープルとシルバー */
+        :root {
+            --primary: #4a148c; /* 知的なパープル */
+            --accent: #00c853;  /* 成長を表すグリーン */
+            --bg-gray: #f4f7f6;
+            --text-main: #2c3e50;
+        }
+
+        body { font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif; background-color: var(--bg-gray); margin: 0; padding: 20px; color: var(--text-main); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        /* 戻るボタン */
+        .home-back-nav { margin-bottom: 20px; display: flex; align-items: center; }
+        .btn-home {
+            text-decoration: none; color: var(--primary); font-size: 14px; font-weight: bold;
+            border: 1px solid var(--primary); padding: 8px 16px; border-radius: 4px;
+            transition: all 0.3s; background: white;
+        }
+        .btn-home:hover { background: var(--primary); color: white; }
+
+        /* 検索ボックス */
+        .search-container {
+            background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(74, 20, 140, 0.08);
+            margin-bottom: 30px; display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end;
+            border-top: 4px solid var(--primary);
+        }
+        .search-group { display: flex; flex-direction: column; gap: 8px; }
+        .search-group label { font-size: 13px; font-weight: bold; color: var(--primary); }
+        .search-group select { padding: 12px; border: 1px solid #d1d9e6; border-radius: 6px; min-width: 200px; background: white; font-size: 14px; }
+        
+        h1 { text-align: left; color: var(--primary); border-left: 6px solid var(--primary); padding-left: 15px; margin-bottom: 25px; font-size: 24px; letter-spacing: 1px; }
+
+        /* 物件・案件グリッド */
+        .property-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;
+        }
+
+        /* 案件カード */
+        .card {
+            background: white; border-radius: 12px; overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); cursor: pointer;
+            display: flex; flex-direction: column; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(74, 20, 140, 0.15); }
+        
+        .image-box { width: 100%; height: 200px; background: #eaedf2; position: relative; overflow: hidden; }
+        .yield-badge { background: var(--accent); color: white; padding: 6px 14px; font-weight: bold; position: absolute; top: 0; right: 0; font-size: 14px; z-index: 1; border-bottom-left-radius: 12px; }
+        .category-tag { background: var(--primary); color: white; padding: 4px 10px; font-size: 11px; position: absolute; bottom: 10px; left: 10px; border-radius: 4px; z-index: 1; }
+        .property-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .content { padding: 20px; flex-grow: 1; }
+        .asset-type { font-size: 12px; color: #7f8c8d; font-weight: bold; margin-bottom: 8px; }
+        .title { font-size: 18px; font-weight: bold; line-height: 1.4; margin-bottom: 12px; color: #2c3e50; height: 50px; overflow: hidden; }
+        .price { font-size: 22px; color: var(--primary); font-weight: bold; }
+
+        /* 詳細画面 */
+        #detail-view { display: none; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .back-btn { cursor: pointer; color: var(--primary); font-weight: bold; margin-bottom: 25px; display: inline-block; }
+        .spec-table { width: 100%; border-collapse: collapse; margin-top: 25px; }
+        .spec-table th, .spec-table td { border-bottom: 1px solid #f0f0f0; padding: 20px; text-align: left; }
+        .spec-table th { background: #f9f9fb; color: #5d6d7e; width: 30%; }
+        .inquiry-btn { width: 100%; background: var(--primary); color: white; padding: 20px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 30px; transition: 0.3s; }
+        .inquiry-btn:hover { background: #310d63; box-shadow: 0 5px 15px rgba(74, 20, 140, 0.3); }
+        
+        .loading { text-align: center; padding: 50px; color: var(--primary); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="main-list">
+    <div class="home-back-nav">
+        <a href="index.html" class="btn-home">🏠 ホームに戻る</a>
+    </div>
+
+    <h1>その他投資・オルタナティブ資産</h1>
+
+    <div class="search-container">
+        <div class="search-group">
+            <label>投資カテゴリー</label>
+            <select id="filter-category" onchange="filterProperties()">
+                <option value="all">すべてのカテゴリー</option>
+                <option value="太陽光">太陽光・再生可能エネルギー</option>
+                <option value="債権">債権・エンジェル投資</option>
+                <option value="船舶">船舶・航空機リース</option>
+                <option value="アンティーク">実物資産（時計・ワイン等）</option>
+                <option value="その他">その他</option>
+            </select>
+        </div>
+        <div class="search-group">
+            <label>投資規模（目安）</label>
+            <select id="filter-scale" onchange="filterProperties()">
+                <option value="all">すべての価格帯</option>
+                <option value="1000万未満">1,000万円未満</option>
+                <option value="5000万未満">5,000万円未満</option>
+                <option value="5000万以上">5,000万円以上</option>
+            </select>
+        </div>
+        <div style="font-size: 14px; color: var(--primary); font-weight: bold; margin-left: auto;" id="count-display">読み込み中...</div>
+    </div>
+    
+    <div class="property-grid" id="grid">
+        <div class="loading">最新の案件情報を取得しています...</div>
+    </div>
+</div>
+
+<div class="container" id="detail-view">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <div class="back-btn" onclick="showList()">← 案件一覧に戻る</div>
+        <a href="index.html" class="btn-home" style="padding: 5px 12px; font-size: 12px;">🏠 ホームに戻る</a>
+    </div>
+
+    <h1 id="det-title"></h1>
+    <div id="det-img-box" class="image-box" style="height: 400px; margin-bottom: 25px; border-radius: 12px;"></div>
+    <div class="content">
+        <div style="background: #f3e5f5; border: 1px solid #e1bee7; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+            <span style="color: var(--primary); font-size: 14px; font-weight: bold;">参考投資額</span><br>
+            <span id="det-price" style="font-size: 36px; color: var(--primary); font-weight: bold;"></span>
+        </div>
+        <table class="spec-table">
+            <tr><th>投資カテゴリー</th><td id="det-category"></td></tr>
+            <tr><th>案件所在地/管轄</th><td id="det-loc"></td></tr>
+            <tr><th>想定利回り（年率）</th><td id="det-yield" style="font-weight:bold; color:var(--accent);"></td></tr>
+            <tr><th>運用期間/償還</th><td id="det-term"></td></tr>
+            <tr><th>案件詳細</th><td id="det-desc"></td></tr>
+        </table>
+        <button class="inquiry-btn" id="submit-inquiry">この案件の資料請求・個別相談</button>
+    </div>
+</div>
+
+<script>
+    // 指定されたスプレッドシートのCSV URL
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR3fWpRRjzL6v1Chh3NX1PebWoHf--6giJkrqRHXqfoDq1gCIcySOaJVqUm7xNfyrwqtC-rvHgU_pt9/pub?gid=0&single=true&output=csv";
+
+    async function loadProperties() {
+        try {
+            const response = await fetch(csvUrl);
+            const csvText = await response.text();
+            const rows = csvText.split(/\r?\n/).filter(row => row.trim() !== "");
+            const grid = document.getElementById('grid');
+            grid.innerHTML = "";
+
+            for (let i = 1; i < rows.length; i++) {
+                const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if (cols.length < 5) continue;
+
+                const clean = (val) => (val || "").replace(/^"|"$/g, "").trim();
+
+                const name     = clean(cols[0]); // 案件名
+                const price    = clean(cols[1]); // 投資額
+                const yieldV   = clean(cols[2]); // 利回り
+                const category = clean(cols[3]); // カテゴリー（スプレッドシートの「エリア」列を流用想定）
+                const type     = clean(cols[4]); // 投資種別
+                const term     = clean(cols[5]); // 運用期間
+                const img      = clean(cols[6]); // 画像URL
+                const desc     = clean(cols[7]); // 説明
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.setAttribute('data-category', category);
+                
+                card.innerHTML = `
+                    <div class="image-box">
+                        <div class="yield-badge">年利 ${yieldV}</div>
+                        <div class="category-tag">${category}</div>
+                        <img class="property-img" src="${img}" alt="${name}" onerror="this.src='https://via.placeholder.com/400x300?text=Investment+Image'">
+                    </div>
+                    <div class="content">
+                        <div class="asset-type">${type}</div>
+                        <div class="title">${name}</div>
+                        <div class="price">${price}</div>
+                        <div style="font-size:12px; color:#7f8c8d; margin-top:10px;">🕒 運用期間: ${term}</div>
+                    </div>
+                `;
+
+                card.onclick = () => showDetail(name, price, yieldV, category, type, term, img, desc);
+                grid.appendChild(card);
+            }
+            filterProperties();
+        } catch (e) {
+            document.getElementById('grid').innerHTML = "<div class='loading' style='color:red;'>案件データの読み込みに失敗しました。</div>";
+        }
+    }
+
+    function showDetail(title, price, yieldV, cat, type, term, img, desc) {
+        document.getElementById('main-list').style.display = 'none';
+        document.getElementById('detail-view').style.display = 'block';
+        document.getElementById('det-title').innerText = title;
+        document.getElementById('det-price').innerText = price;
+        document.getElementById('det-yield').innerText = yieldV;
+        document.getElementById('det-category').innerText = cat;
+        document.getElementById('det-loc').innerText = type; // 種別を所在地項目に表示
+        document.getElementById('det-term').innerText = term;
+        document.getElementById('det-desc').innerText = desc || "詳細はお問い合わせください。";
+        document.getElementById('det-img-box').innerHTML = `<img src="${img}" class="property-img" onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'">`;
+        
+        // 資料請求ボタン（将来的にGoogleフォームやformrunのURLをここに設定）
+        document.getElementById('submit-inquiry').onclick = () => {
+            alert(title + " の資料請求を承ります。フォームへ遷移します。");
+            // window.open("YOUR_FORM_URL", "_blank");
+        };
+
+        window.scrollTo(0,0);
+    }
+
+    function showList() {
+        document.getElementById('main-list').style.display = 'block';
+        document.getElementById('detail-view').style.display = 'none';
+        window.scrollTo(0,0);
+    }
+
+    function filterProperties() {
+        const catFilter = document.getElementById('filter-category').value;
+        const cards = document.querySelectorAll('.card');
+        let count = 0;
+
+        cards.forEach(card => {
+            const cat = card.getAttribute('data-category') || "";
+            const catMatch = (catFilter === 'all' || cat.includes(catFilter));
+
+            if (catMatch) {
+                card.style.display = 'flex';
+                count++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        document.getElementById('count-display').innerText = `該当案件: ${count}件`;
+    }
+
+    loadProperties();
+</script>
+</body>
+</html>
