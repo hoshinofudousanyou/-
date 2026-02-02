@@ -125,7 +125,7 @@
 
 <script>
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS9kOrA9rWRF7KPmyb0qRRgLvvhH2OrNZzwa0bNg23Dts2ss4nth1BTe_ptE2atqHWJySXqfXFrBN4F/pub?gid=1375938058&single=true&output=csv";
-    const formUrl = "https://form.run/@goodfellows-toushiotoiawase"; // formrunのURL
+    const formUrl = "https://form.run/@goodfellows-toushiotoiawase"; 
 
     async function loadProperties() {
         try {
@@ -177,12 +177,10 @@
         document.getElementById('det-desc').innerText = desc || "詳細はお問い合わせください。";
         document.getElementById('det-img-box').innerHTML = `<img src="${img}" class="property-img" onerror="this.src='https://via.placeholder.com/800x600?text=Image+Unavailable'">`;
         
-        // --- 修正箇所：ボタンクリック時に物件名を自動入力して飛ばす ---
+        // --- 修正箇所：物件名を ID _field_14 に渡す ---
         const btn = document.getElementById('inquiry-button');
         btn.onclick = function() {
-            // formrunのURLに物件名（title）をパラメータとして付けて飛ばす
-            // ?物件名=... の部分はformrun側の「項目名」に合わせて調整可能です
-            const targetUrl = `${formUrl}?_field_6=${encodeURIComponent(title)}`; 
+            const targetUrl = `${formUrl}?_field_14=${encodeURIComponent(title)}`; 
             window.open(targetUrl, '_blank');
         };
 
