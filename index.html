@@ -36,59 +36,26 @@
         }
 
         .header-container {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; justify-content: space-between; align-items: center; padding: 0 40px;
+            max-width: 1400px; /* 少し幅を広げてメニューを外側に逃がす */
+            margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 60px; /* 余白を増やして干渉を防ぐ */
         }
 
-        /* --- 左上ロゴエリア：VISTAデザイン --- */
+        /* --- 左上ロゴエリア --- */
         .logo-area a {
-            display: flex;
-            flex-direction: column; 
-            align-items: flex-start;
-            text-decoration: none;
-            color: #fff;
+            display: flex; flex-direction: column; align-items: flex-start;
+            text-decoration: none; color: #fff;
         }
-
-        .vista-icon {
-            width: 30px;
-            height: 20px;
-            position: relative;
-            margin-bottom: 5px;
-            margin-left: 2px;
-        }
-        .vista-icon::before, .vista-icon::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            width: 2px;
-            height: 100%;
-            background: var(--gold-grad);
-        }
+        .vista-icon { width: 30px; height: 20px; position: relative; margin-bottom: 5px; margin-left: 2px; }
+        .vista-icon::before, .vista-icon::after { content: ''; position: absolute; top: 0; width: 2px; height: 100%; background: var(--gold-grad); }
         .vista-icon::before { left: 7px; transform: rotate(-30deg); }
         .vista-icon::after { left: 17px; transform: rotate(30deg); }
-        
-        .vista-icon-dot {
-            position: absolute;
-            top: -5px;
-            left: 12px;
-            width: 4px;
-            height: 4px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--gold);
-        }
-
-        .logo-text { 
-            font-size: 1.1rem; 
-            letter-spacing: 0.25em; 
-            font-weight: bold; 
-            line-height: 1;
-        }
+        .vista-icon-dot { position: absolute; top: -5px; left: 12px; width: 4px; height: 4px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px var(--gold); }
+        .logo-text { font-size: 1.1rem; letter-spacing: 0.25em; font-weight: bold; line-height: 1; }
         .logo-text span { color: var(--gold); }
 
-        /* --- ドロップダウンメニュー（完全透明設定） --- */
+        /* --- ドロップダウンメニュー（干渉回避設定） --- */
         .menu-wrapper { position: relative; width: 160px; }
-
         .menu-trigger {
             color: #fff; font-size: 0.75rem; letter-spacing: 0.2em;
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -102,40 +69,20 @@
             top: calc(100% + 5px); 
             right: 0; 
             width: 100%;
-            /* 背景を完全透明に */
             background: transparent; 
             backdrop-filter: none;
-            -webkit-backdrop-filter: none;
-            /* 境界線はうっすらとゴールドで */
             border: 1px solid rgba(197, 160, 89, 0.3);
-            padding: 8px 0; 
-            list-style: none; 
-            opacity: 0; 
-            visibility: hidden;
-            transform: translateY(-5px); 
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            padding: 8px 0; list-style: none; opacity: 0; visibility: hidden;
+            transform: translateY(-5px); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .dropdown-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
 
         .dropdown-menu li a {
-            display: block; 
-            padding: 12px 15px; 
-            color: #fff; 
-            text-decoration: none;
-            font-size: 0.75rem; 
-            letter-spacing: 0.02em; 
-            transition: 0.3s;
-            white-space: nowrap;
-            /* 透明背景で文字を際立たせる影 */
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+            display: block; padding: 12px 15px; color: #fff; text-decoration: none;
+            font-size: 0.75rem; letter-spacing: 0.02em; transition: 0.3s;
+            white-space: nowrap; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
         }
-        
-        .dropdown-menu li a:hover { 
-            background: rgba(197, 160, 89, 0.2); 
-            color: var(--gold); 
-            padding-left: 20px; 
-            border-left: 3px solid var(--gold);
-        }
+        .dropdown-menu li a:hover { background: rgba(197, 160, 89, 0.2); color: var(--gold); padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* --- ヒーロースライダー --- */
         .hero-slider {
@@ -160,17 +107,17 @@
         }
         .hero-content.active { opacity: 1; transform: translateY(0); }
         .hero-content h1 { 
-            font-size: clamp(1.8rem, 5.5vw, 3.8rem); margin-bottom: 30px; letter-spacing: 0.35em; 
+            font-size: clamp(1.5rem, 5vw, 3.5rem); /* わずかにサイズを調整して余裕を持たせる */
+            margin-bottom: 30px; letter-spacing: 0.35em; 
             font-weight: normal; white-space: nowrap; text-shadow: 0 0 25px rgba(0,0,0,0.8);
         }
         .hero-content p { font-size: clamp(0.9rem, 2.2vw, 1.3rem); line-height: 2.5; letter-spacing: 0.2em; text-shadow: 0 0 15px rgba(0,0,0,0.8); }
 
-        /* --- セクションタイトル --- */
+        /* --- コンテンツエリア --- */
         .section-title { text-align: center; margin: 100px 0 60px; }
         .section-title h2 { font-size: 2rem; letter-spacing: 0.3em; color: var(--navy); margin-bottom: 15px; position: relative; display: inline-block; }
         .section-title h2::after { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 50px; height: 1px; background: var(--gold); }
 
-        /* --- コンテンツエリア --- */
         .container { max-width: 1150px; margin: 0 auto 120px; padding: 0 20px; }
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px; }
         .card { 
@@ -185,23 +132,16 @@
         .card-body { padding: 50px 40px; text-align: center; }
         .card h3 { color: var(--navy); font-size: 1.6rem; margin-bottom: 20px; letter-spacing: 0.15em; font-weight: normal; }
         .card p { color: var(--text-light); font-size: 1rem; line-height: 2.2; margin-bottom: 35px; }
-        
-        .btn { 
-            display: inline-block; padding: 15px 50px; border: 1px solid var(--gold); 
-            color: var(--gold); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.3em;
-            font-weight: bold; transition: 0.4s; position: relative; z-index: 1;
-        }
+        .btn { display: inline-block; padding: 15px 50px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.3em; font-weight: bold; transition: 0.4s; position: relative; z-index: 1; }
         .btn::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 100%; background: var(--gold-grad); transition: 0.4s; z-index: -1; }
         .card:hover .btn { color: #fff; border-color: transparent; }
         .card:hover .btn::before { width: 100%; }
 
         footer { text-align: center; padding: 120px 20px; background: var(--navy); color: rgba(255,255,255,0.4); font-size: 0.8rem; letter-spacing: 0.2em; }
 
-        @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; }
+        @media (max-width: 1024px) {
+            .header-container { padding: 0 30px; }
             .hero-content h1 { white-space: normal; }
-            .menu-wrapper { width: 140px; }
-            .header-container { padding: 0 20px; }
         }
     </style>
 </head>
@@ -211,9 +151,7 @@
         <div class="header-container">
             <div class="logo-area">
                 <a href="#">
-                    <div class="vista-icon">
-                        <div class="vista-icon-dot"></div>
-                    </div>
+                    <div class="vista-icon"><div class="vista-icon-dot"></div></div>
                     <span class="logo-text">TAINAVI <span>VISTA</span></span>
                 </a>
             </div>
@@ -242,9 +180,7 @@
         </div>
     </div>
 
-    <div class="section-title">
-        <h2>INVESTMENT SELECTION</h2>
-    </div>
+    <div class="section-title"><h2>INVESTMENT SELECTION</h2></div>
 
     <div class="container">
         <div class="grid">
@@ -272,48 +208,15 @@
     <script>
         const menuBtn = document.getElementById('menuBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
-
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('show');
-            menuBtn.classList.toggle('active');
-        });
-
-        document.addEventListener('click', () => {
-            dropdownMenu.classList.remove('show');
-            menuBtn.classList.remove('active');
-        });
-
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('mainHeader');
-            if (window.scrollY > 80) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
+        menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdownMenu.classList.toggle('show'); menuBtn.classList.toggle('active'); });
+        document.addEventListener('click', () => { dropdownMenu.classList.remove('show'); menuBtn.classList.remove('active'); });
+        window.addEventListener('scroll', () => { const header = document.getElementById('mainHeader'); if (window.scrollY > 80) header.classList.add('scrolled'); else header.classList.remove('scrolled'); });
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
+        function nextSlide() { slides[currentSlide].classList.remove('active'); currentSlide = (currentSlide + 1) % slides.length; slides[currentSlide].classList.add('active'); }
         setInterval(nextSlide, 6000);
-
-        window.addEventListener('load', () => {
-            document.getElementById('heroText').classList.add('active');
-        });
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
+        window.addEventListener('load', () => { document.getElementById('heroText').classList.add('active'); });
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); }); }, { threshold: 0.1 });
         document.querySelectorAll('.card').forEach(card => observer.observe(card));
     </script>
 </body>
