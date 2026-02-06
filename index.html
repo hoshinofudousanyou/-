@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Investment Selection</title>
+    <title>TAINAVI VISTA | Premium Investment Selection</title>
     <style>
         :root {
             --gold: #c5a059;
@@ -18,198 +18,216 @@
             font-family: "Times New Roman", "YuMincho", "Hiragino Mincho ProN", serif; 
             margin: 0; padding: 0; color: var(--text-dark); background-color: #fcfcfc; overflow-x: hidden;
         }
-        
-        .hero-slider {
-            position: relative;
-            height: 85vh;
-            min-height: 550px;
-            overflow: hidden;
-            background-color: #000;
+
+        /* --- ヘッダー --- */
+        #mainHeader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.7), transparent);
+        }
+
+        #mainHeader.scrolled {
+            background: rgba(10, 25, 47, 0.95);
+            padding: 12px 0;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .header-container {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 40px;
+        }
+
+        /* --- 左上ロゴエリア：VISTAデザイン --- */
+        .logo-area a {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column; 
+            align-items: flex-start;
+            text-decoration: none;
+            color: #fff;
         }
 
-        .slide {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 2.5s ease-in-out, transform 12s linear;
-            z-index: 1;
+        .vista-icon {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            margin-bottom: 5px;
+            margin-left: 2px;
         }
-
-        .slide.active { opacity: 1; transform: scale(1.15); z-index: 2; }
-        
-        .slide::after {
+        .vista-icon::before, .vista-icon::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: var(--gold-grad);
+        }
+        .vista-icon::before { left: 7px; transform: rotate(-30deg); }
+        .vista-icon::after { left: 17px; transform: rotate(30deg); }
+        
+        .vista-icon-dot {
+            position: absolute;
+            top: -5px;
+            left: 12px;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        .logo-text { 
+            font-size: 1.1rem; 
+            letter-spacing: 0.25em; 
+            font-weight: bold; 
+            line-height: 1;
+        }
+        .logo-text span { color: var(--gold); }
+
+        /* --- ドロップダウンメニュー（完全透明設定） --- */
+        .menu-wrapper { position: relative; width: 160px; }
+
+        .menu-trigger {
+            color: #fff; font-size: 0.75rem; letter-spacing: 0.2em;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 0; cursor: pointer; transition: 0.3s;
+            text-align: center; width: 100%; box-sizing: border-box;
+        }
+        .menu-trigger:hover, .menu-trigger.active { border-color: var(--gold); color: var(--gold); }
+
+        .dropdown-menu {
+            position: absolute; 
+            top: calc(100% + 5px); 
+            right: 0; 
+            width: 100%;
+            /* 背景を完全透明に */
+            background: transparent; 
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            /* 境界線はうっすらとゴールドで */
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            padding: 8px 0; 
+            list-style: none; 
+            opacity: 0; 
+            visibility: hidden;
+            transform: translateY(-5px); 
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .dropdown-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        .dropdown-menu li a {
+            display: block; 
+            padding: 12px 15px; 
+            color: #fff; 
+            text-decoration: none;
+            font-size: 0.75rem; 
+            letter-spacing: 0.02em; 
+            transition: 0.3s;
+            white-space: nowrap;
+            /* 透明背景で文字を際立たせる影 */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+        }
+        
+        .dropdown-menu li a:hover { 
+            background: rgba(197, 160, 89, 0.2); 
+            color: var(--gold); 
+            padding-left: 20px; 
+            border-left: 3px solid var(--gold);
+        }
+
+        /* --- ヒーロースライダー --- */
+        .hero-slider {
+            position: relative; height: 85vh; min-height: 550px; overflow: hidden;
+            background-color: #000; display: flex; align-items: center; justify-content: center;
+        }
+        .slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center; opacity: 0;
+            transition: opacity 2.5s ease-in-out, transform 12s linear; z-index: 1;
+        }
+        .slide.active { opacity: 1; transform: scale(1.15); z-index: 2; }
+        .slide::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
         }
 
         .hero-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            color: #fff;
-            padding: 0 20px;
-            /* 修正点：幅を広げて折り返しを防止 */
-            max-width: 1200px; 
-            width: 95%;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 2.2s ease 0.5s;
+            position: relative; z-index: 10; text-align: center; color: #fff;
+            padding: 0 20px; max-width: 1400px; width: 100%; opacity: 0;
+            transform: translateY(30px); transition: all 2.2s ease 0.5s;
         }
-
         .hero-content.active { opacity: 1; transform: translateY(0); }
+        .hero-content h1 { 
+            font-size: clamp(1.8rem, 5.5vw, 3.8rem); margin-bottom: 30px; letter-spacing: 0.35em; 
+            font-weight: normal; white-space: nowrap; text-shadow: 0 0 25px rgba(0,0,0,0.8);
+        }
+        .hero-content p { font-size: clamp(0.9rem, 2.2vw, 1.3rem); line-height: 2.5; letter-spacing: 0.2em; text-shadow: 0 0 15px rgba(0,0,0,0.8); }
 
-        .hero-content h1 {
-            font-size: clamp(1.8rem, 5.5vw, 3.8rem);
-            margin-bottom: 30px;
-            letter-spacing: 0.35em;
-            font-weight: normal;
-            text-shadow: 0 0 25px rgba(0,0,0,0.8);
-            /* 修正点：絶対に1行で表示させる設定 */
-            white-space: nowrap; 
-        }
+        /* --- セクションタイトル --- */
+        .section-title { text-align: center; margin: 100px 0 60px; }
+        .section-title h2 { font-size: 2rem; letter-spacing: 0.3em; color: var(--navy); margin-bottom: 15px; position: relative; display: inline-block; }
+        .section-title h2::after { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 50px; height: 1px; background: var(--gold); }
 
-        .hero-content p {
-            font-size: clamp(0.9rem, 2.2vw, 1.3rem);
-            font-family: "YuMincho", serif;
-            letter-spacing: 0.2em;
-            line-height: 2.5;
-            text-shadow: 0 0 15px rgba(0,0,0,0.8);
-        }
-
-        .section-title {
-            text-align: center;
-            margin: 100px 0 60px;
-        }
-        .section-title h2 {
-            font-size: 2rem;
-            letter-spacing: 0.3em;
-            color: var(--navy);
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
-        }
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -15px; left: 50%; transform: translateX(-50%);
-            width: 50px; height: 1px; background: var(--gold);
-        }
-
-        .container { 
-            max-width: 1150px; 
-            margin: 0 auto 120px; 
-            padding: 0 20px;
-        }
-        
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 60px; 
-        }
-        
+        /* --- コンテンツエリア --- */
+        .container { max-width: 1150px; margin: 0 auto 120px; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px; }
         .card { 
-            background: #fff; 
-            overflow: hidden; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.06); 
-            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); 
-            text-decoration: none; 
-            display: flex; 
-            flex-direction: column;
-            border: 1px solid #f0f0f0;
-            opacity: 0;
-            transform: translateY(40px);
+            background: #fff; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.06); 
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); text-decoration: none; 
+            display: flex; flex-direction: column; border: 1px solid #f0f0f0; opacity: 0; transform: translateY(40px);
         }
-        
         .card.is-visible { opacity: 1; transform: translateY(0); }
-
-        .card:hover { 
-            transform: translateY(-15px); 
-            box-shadow: 0 40px 80px rgba(0,0,0,0.12); 
-            border-color: var(--gold);
-        }
-        
-        .card-img {
-            height: 300px;
-            background-size: cover;
-            background-position: center;
-            transition: transform 1.5s ease;
-        }
+        .card:hover { transform: translateY(-15px); box-shadow: 0 40px 80px rgba(0,0,0,0.12); border-color: var(--gold); }
+        .card-img { height: 300px; background-size: cover; background-position: center; transition: transform 1.5s ease; }
         .card:hover .card-img { transform: scale(1.1); }
-
-        .card-body { 
-            padding: 50px 40px; 
-            text-align: center; 
-            background: #fff;
-            position: relative;
-        }
-
-        .card h3 { 
-            color: var(--navy); 
-            font-size: 1.6rem; 
-            margin: 0 0 20px; 
-            letter-spacing: 0.15em; 
-            font-weight: normal;
-        }
-
-        .card p { 
-            color: var(--text-light); 
-            font-size: 1rem; 
-            line-height: 2.2; 
-            margin-bottom: 35px; 
-            font-family: "YuGothic", sans-serif; 
-        }
+        .card-body { padding: 50px 40px; text-align: center; }
+        .card h3 { color: var(--navy); font-size: 1.6rem; margin-bottom: 20px; letter-spacing: 0.15em; font-weight: normal; }
+        .card p { color: var(--text-light); font-size: 1rem; line-height: 2.2; margin-bottom: 35px; }
         
         .btn { 
-            display: inline-block; 
-            padding: 15px 50px; 
-            background: #fff;
-            border: 1px solid var(--gold); 
-            color: var(--gold); 
-            text-decoration: none; 
-            font-size: 0.85rem; 
-            letter-spacing: 0.3em;
-            transition: all 0.4s ease;
-            font-weight: bold;
-            position: relative;
-            z-index: 1;
+            display: inline-block; padding: 15px 50px; border: 1px solid var(--gold); 
+            color: var(--gold); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.3em;
+            font-weight: bold; transition: 0.4s; position: relative; z-index: 1;
         }
-
-        .btn::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 0; height: 100%;
-            background: var(--gold-grad); transition: all 0.4s ease; z-index: -1;
-        }
-
+        .btn::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 100%; background: var(--gold-grad); transition: 0.4s; z-index: -1; }
         .card:hover .btn { color: #fff; border-color: transparent; }
         .card:hover .btn::before { width: 100%; }
 
-        footer { 
-            text-align: center; 
-            padding: 120px 20px; 
-            background: var(--navy); 
-            color: rgba(255,255,255,0.4); 
-            font-size: 0.8rem; 
-            letter-spacing: 0.2em; 
-        }
+        footer { text-align: center; padding: 120px 20px; background: var(--navy); color: rgba(255,255,255,0.4); font-size: 0.8rem; letter-spacing: 0.2em; }
 
-        /* スマホ用：画面からはみ出る場合はフォントサイズを自動調整 */
         @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; gap: 40px; }
-            .hero-slider { height: 65vh; }
-            .hero-content h1 { 
-                white-space: normal; /* スマホではさすがに折り返す */
-                letter-spacing: 0.2em;
-            }
+            .grid { grid-template-columns: 1fr; }
+            .hero-content h1 { white-space: normal; }
+            .menu-wrapper { width: 140px; }
+            .header-container { padding: 0 20px; }
         }
     </style>
 </head>
 <body>
+
+    <header id="mainHeader">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="#">
+                    <div class="vista-icon">
+                        <div class="vista-icon-dot"></div>
+                    </div>
+                    <span class="logo-text">TAINAVI <span>VISTA</span></span>
+                </a>
+            </div>
+            <div class="menu-wrapper">
+                <div class="menu-trigger" id="menuBtn">MENU</div>
+                <ul class="dropdown-menu" id="dropdownMenu">
+                    <li><a href="kaigai.html">海外不動産</a></li>
+                    <li><a href="kokunai.html">国内不動産</a></li>
+                    <li><a href="https://www.tainavi-pp.com/lp/?gad_source=1" target="_blank">太陽光・蓄電所</a></li>
+                    <li><a href="sonota.html">その他投資</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
 
     <div class="hero-slider">
         <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000');"></div>
@@ -231,48 +249,50 @@
     <div class="container">
         <div class="grid">
             <a href="kaigai.html" class="card">
-                <div class="card-img img-kaigai" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=1000');"></div>
-                <div class="card-body">
-                    <h3>海外不動産</h3>
-                    <p>世界の成長を資産に。人口増加と経済発展の恩恵を享受する、攻めの資産形成。</p>
-                    <span class="btn">VIEW MORE</span>
-                </div>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=1000');"></div>
+                <div class="card-body"><h3>海外不動産</h3><p>世界の成長を資産に。人口増加と経済発展の恩恵を享受する、攻めの資産形成。</p><span class="btn">VIEW MORE</span></div>
             </a>
-
             <a href="kokunai.html" class="card">
-                <div class="card-img img-kokunai" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=1000');"></div>
-                <div class="card-body">
-                    <h3>国内不動産</h3>
-                    <p>確かな安定を足元に。都心一等地の流動性を背景に、堅実な守りの運用を。</p>
-                    <span class="btn">VIEW MORE</span>
-                </div>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=1000');"></div>
+                <div class="card-body"><h3>国内不動産</h3><p>確かな安定を足元に。都心一等地の流動性を背景に、堅実な守りの運用を。</p><span class="btn">VIEW MORE</span></div>
             </a>
-
             <a href="https://www.tainavi-pp.com/lp/?gad_source=1" target="_blank" class="card">
-                <div class="card-img img-solar" style="background-image: url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=1000');"></div>
-                <div class="card-body">
-                    <h3>太陽光発電・蓄電所</h3>
-                    <p>20年の安心を国と共に。固定価格買取制度（FIT）による、予測可能な安定収益。</p>
-                    <span class="btn">VIEW MORE</span>
-                </div>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=1000');"></div>
+                <div class="card-body"><h3>太陽光発電・蓄電所</h3><p>20年の安心を国と共に。固定価格買取制度（FIT）による、予測可能な安定収益。</p><span class="btn">VIEW MORE</span></div>
             </a>
-
             <a href="sonota.html" class="card">
-                <div class="card-img img-other" style="background-image: url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=1000');"></div>
-                <div class="card-body">
-                    <h3>その他投資</h3>
-                    <p>新たな可能性を追求。市場トレンドを捉え、既存の枠にとらわれない独自の戦略。</p>
-                    <span class="btn">VIEW MORE</span>
-                </div>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=1000');"></div>
+                <div class="card-body"><h3>その他投資</h3><p>新たな可能性を追求。市場トレンドを捉え、既存の枠にとらわれない独自の戦略。</p><span class="btn">VIEW MORE</span></div>
             </a>
         </div>
     </div>
 
-    <footer>
-        &copy; 2026 PREMIUM INVESTMENT SELECTION. ALL RIGHTS RESERVED.
-    </footer>
+    <footer>&copy; 2026 TAINAVI VISTA. ALL RIGHTS RESERVED.</footer>
 
     <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('show');
+            menuBtn.classList.toggle('active');
+        });
+
+        document.addEventListener('click', () => {
+            dropdownMenu.classList.remove('show');
+            menuBtn.classList.remove('active');
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 80) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
         function nextSlide() {
@@ -286,23 +306,15 @@
             document.getElementById('heroText').classList.add('active');
         });
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.card').forEach(card => {
-            observer.observe(card);
-        });
+        document.querySelectorAll('.card').forEach(card => observer.observe(card));
     </script>
 </body>
 </html>
