@@ -59,18 +59,22 @@
                 </div>
             </details>
         </div>
+
+        <div class="faq-back-home">
+            <a href="index.html" class="btn-gold-border">トップページに戻る</a>
+        </div>
     </div>
 </section>
 
 <style>
     /* 全体背景とフォント設定 */
     .premium-faq {
-        background-color: #ffffff; /* 清潔感のある白。重厚にしたい場合は #1a1a1a (黒)に変更可 */
+        background-color: #ffffff;
         padding: 100px 20px;
-        font-family: "Times New Roman", "YuMincho", "Hiragino Mincho ProN", serif; /* 明朝体で高級感を演出 */
+        font-family: "Times New Roman", "YuMincho", "Hiragino Mincho ProN", serif;
     }
     .faq-inner {
-        max-width: 900px;
+        max-width: 800px; /* 少し絞って密度を高めました */
         margin: 0 auto;
     }
     .faq-header {
@@ -80,13 +84,13 @@
     }
     .faq-label {
         font-size: 14px;
-        color: #bfa100; /* ゴールド */
+        color: #bfa100;
         display: block;
         margin-bottom: 10px;
         font-weight: bold;
     }
     .faq-title {
-        font-size: 36px;
+        font-size: 32px;
         font-weight: 500;
         color: #111;
         margin: 0;
@@ -97,20 +101,13 @@
         margin-top: 5px;
     }
 
-    /* アコーディオンカード */
-    .faq-list {
-        border-top: 1px solid #e0e0e0;
-    }
-    .faq-card {
-        border-bottom: 1px solid #e0e0e0;
-        transition: background-color 0.3s;
-    }
-    .faq-card:hover {
-        background-color: #fafafa;
-    }
+    /* アコーディオン */
+    .faq-list { border-top: 1px solid #e0e0e0; }
+    .faq-card { border-bottom: 1px solid #e0e0e0; transition: background-color 0.3s; }
+    .faq-card:hover { background-color: #fafafa; }
     .faq-question {
-        padding: 30px 10px;
-        font-size: 18px;
+        padding: 25px 10px;
+        font-size: 17px;
         color: #222;
         font-weight: 500;
         cursor: pointer;
@@ -120,44 +117,40 @@
         align-items: center;
     }
     .faq-question::-webkit-details-marker { display: none; }
-    
-    .q-prefix {
-        color: #bfa100;
-        font-size: 24px;
-        margin-right: 20px;
-        font-family: serif;
-    }
+    .q-prefix { color: #bfa100; font-size: 22px; margin-right: 20px; font-family: serif; }
 
-    /* 開閉アイコン（＋を細いラインで表現） */
-    .icon {
-        position: absolute;
-        right: 10px;
-        width: 15px;
-        height: 15px;
-    }
-    .icon::before, .icon::after {
-        content: '';
-        position: absolute;
-        background-color: #bfa100;
-        transition: transform 0.3s;
-    }
+    .icon { position: absolute; right: 10px; width: 15px; height: 15px; }
+    .icon::before, .icon::after { content: ''; position: absolute; background-color: #bfa100; transition: transform 0.3s; }
     .icon::before { width: 100%; height: 1px; top: 7px; left: 0; }
     .icon::after { width: 1px; height: 100%; top: 0; left: 7px; }
-    
-    details[open] .icon::after {
-        transform: rotate(90deg);
-        opacity: 0;
-    }
+    details[open] .icon::after { transform: rotate(90deg); opacity: 0; }
 
-    /* 回答部分 */
-    .faq-answer {
-        overflow: hidden;
-    }
     .answer-content {
-        padding: 0 10px 30px 54px; /* Qの文字分をずらす */
+        padding: 0 10px 30px 52px;
         color: #555;
         line-height: 1.8;
-        font-size: 16px;
-        font-family: "Hiragino Kaku Gothic ProN", sans-serif; /* 回答は読みやすさ重視でゴシック */
+        font-size: 15px;
+        font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+    }
+
+    /* ボタンのデザイン */
+    .faq-back-home {
+        text-align: center;
+        margin-top: 60px;
+    }
+    .btn-gold-border {
+        display: inline-block;
+        padding: 15px 50px;
+        color: #bfa100;
+        border: 1px solid #bfa100;
+        text-decoration: none;
+        font-size: 14px;
+        letter-spacing: 0.1em;
+        transition: all 0.3s ease;
+        font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+    }
+    .btn-gold-border:hover {
+        background-color: #bfa100;
+        color: #fff;
     }
 </style>
