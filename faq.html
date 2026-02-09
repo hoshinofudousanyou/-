@@ -1,0 +1,163 @@
+<section id="faq" class="premium-faq">
+    <div class="faq-inner">
+        <div class="faq-header">
+            <span class="faq-label">SUPPORT</span>
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <p class="faq-subtitle">よくあるご質問</p>
+        </div>
+
+        <div class="faq-list">
+            <details class="faq-card">
+                <summary class="faq-question">
+                    <span class="q-prefix">Q</span>
+                    どのような投資案件を扱っていますか？
+                    <span class="icon"></span>
+                </summary>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        収益不動産（一棟アパート・マンション等）と、分譲太陽光発電を中心に厳選した案件を掲載しています。住宅用や屋根上設置の見積りではなく、投資収益を目的としたパッケージ案件に特化しています。
+                    </div>
+                </div>
+            </details>
+
+            <details class="faq-card">
+                <summary class="faq-question">
+                    <span class="q-prefix">Q</span>
+                    タイナビ発電所との違いは何ですか？
+                    <span class="icon"></span>
+                </summary>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        本サイトは不動産投資も含めた「総合投資ポータル」です。太陽光物件のより詳細なスペック確認やシミュレーションについては、提携している「タイナビ発電所」へシームレスに連携し、情報を提供しております。
+                    </div>
+                </div>
+            </details>
+
+            <details class="faq-card">
+                <summary class="faq-question">
+                    <span class="q-prefix">Q</span>
+                    利用料や紹介料はかかりますか？
+                    <span class="icon"></span>
+                </summary>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        投資家の皆様からは一切費用をいただいておりません。全ての機能を無料でご利用いただけます。当サイトは提携企業様からの広告料等で運営されております。
+                    </div>
+                </div>
+            </details>
+
+            <details class="faq-card">
+                <summary class="faq-question">
+                    <span class="q-prefix">Q</span>
+                    物件の契約・仲介はタイナビが行うのですか？
+                    <span class="icon"></span>
+                </summary>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        いいえ。当サイトはマッチングプラットフォームであり、売買契約の当事者にはなりません。お問い合わせ後、物件を保有・管理している専門会社をスピーディーにご紹介いたします。
+                    </div>
+                </div>
+            </details>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* 全体背景とフォント設定 */
+    .premium-faq {
+        background-color: #ffffff; /* 清潔感のある白。重厚にしたい場合は #1a1a1a (黒)に変更可 */
+        padding: 100px 20px;
+        font-family: "Times New Roman", "YuMincho", "Hiragino Mincho ProN", serif; /* 明朝体で高級感を演出 */
+    }
+    .faq-inner {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .faq-header {
+        text-align: center;
+        margin-bottom: 60px;
+        letter-spacing: 0.1em;
+    }
+    .faq-label {
+        font-size: 14px;
+        color: #bfa100; /* ゴールド */
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    .faq-title {
+        font-size: 36px;
+        font-weight: 500;
+        color: #111;
+        margin: 0;
+    }
+    .faq-subtitle {
+        font-size: 14px;
+        color: #888;
+        margin-top: 5px;
+    }
+
+    /* アコーディオンカード */
+    .faq-list {
+        border-top: 1px solid #e0e0e0;
+    }
+    .faq-card {
+        border-bottom: 1px solid #e0e0e0;
+        transition: background-color 0.3s;
+    }
+    .faq-card:hover {
+        background-color: #fafafa;
+    }
+    .faq-question {
+        padding: 30px 10px;
+        font-size: 18px;
+        color: #222;
+        font-weight: 500;
+        cursor: pointer;
+        list-style: none;
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .faq-question::-webkit-details-marker { display: none; }
+    
+    .q-prefix {
+        color: #bfa100;
+        font-size: 24px;
+        margin-right: 20px;
+        font-family: serif;
+    }
+
+    /* 開閉アイコン（＋を細いラインで表現） */
+    .icon {
+        position: absolute;
+        right: 10px;
+        width: 15px;
+        height: 15px;
+    }
+    .icon::before, .icon::after {
+        content: '';
+        position: absolute;
+        background-color: #bfa100;
+        transition: transform 0.3s;
+    }
+    .icon::before { width: 100%; height: 1px; top: 7px; left: 0; }
+    .icon::after { width: 1px; height: 100%; top: 0; left: 7px; }
+    
+    details[open] .icon::after {
+        transform: rotate(90deg);
+        opacity: 0;
+    }
+
+    /* 回答部分 */
+    .faq-answer {
+        overflow: hidden;
+    }
+    .answer-content {
+        padding: 0 10px 30px 54px; /* Qの文字分をずらす */
+        color: #555;
+        line-height: 1.8;
+        font-size: 16px;
+        font-family: "Hiragino Kaku Gothic ProN", sans-serif; /* 回答は読みやすさ重視でゴシック */
+    }
+</style>
