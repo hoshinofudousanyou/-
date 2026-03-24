@@ -19,60 +19,78 @@
             margin: 0; padding: 0; color: var(--text-dark); background-color: #fcfcfc; overflow-x: hidden;
         }
 
-        /* --- ヘッダー・ヒーロー・カードのスタイルは既存通り（中略） --- */
-        #mainHeader { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 20px 0; transition: all 0.5s; background: linear-gradient(to bottom, rgba(10, 25, 47, 0.7), transparent); }
-        #mainHeader.scrolled { background: rgba(10, 25, 47, 0.95); padding: 12px 0; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(197, 160, 89, 0.3); }
+        /* --- ヘッダー --- */
+        #mainHeader {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 20px 0; transition: all 0.5s;
+            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.7), transparent);
+        }
+        #mainHeader.scrolled {
+            background: rgba(10, 25, 47, 0.95); padding: 12px 0; backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+        }
         .header-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 60px; }
         .logo-area a { display: flex; flex-direction: column; text-decoration: none; color: #fff; }
         .logo-text { font-size: 1.1rem; letter-spacing: 0.25em; font-weight: bold; }
         .logo-text span { color: var(--gold); }
         .menu-trigger { color: #fff; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 20px; cursor: pointer; }
-        
-        .hero-slider { position: relative; height: 70vh; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .slide { position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: 2s; }
+
+        /* --- ヒーロー --- */
+        .hero-slider {
+            position: relative; height: 80vh; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .slide {
+            position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: 2s;
+        }
         .slide.active { opacity: 0.6; transform: scale(1.1); }
-        .hero-content { position: relative; z-index: 10; text-align: center; color: #fff; }
+        .hero-content { position: relative; z-index: 10; text-align: center; color: #fff; padding: 0 20px; }
+        .hero-content h1 { font-size: clamp(1.5rem, 5vw, 3rem); letter-spacing: 0.3em; margin-bottom: 20px; }
 
-        .section-title { text-align: center; margin: 80px 0 40px; }
-        .section-title h2 { font-size: 2rem; letter-spacing: 0.3em; color: var(--navy); }
+        /* --- セクションタイトル --- */
+        .section-title { text-align: center; margin: 100px 0 60px; }
+        .section-title h2 { font-size: 2rem; letter-spacing: 0.3em; color: var(--navy); position: relative; display: inline-block; padding-bottom: 15px; }
+        .section-title h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 50px; height: 1px; background: var(--gold); }
 
-        .container { max-width: 1150px; margin: 0 auto 80px; padding: 0 20px; }
+        /* --- 投資メニュー（4つのカード） --- */
+        .container { max-width: 1150px; margin: 0 auto 100px; padding: 0 20px; }
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
-        .card { background: #fff; border: 1px solid #eee; text-decoration: none; color: inherit; transition: 0.4s; }
-        .card:hover { transform: translateY(-10px); border-color: var(--gold); }
-        .card-img { height: 200px; background-size: cover; background-position: center; }
-        .card-body { padding: 30px; text-align: center; }
+        .card { 
+            background: #fff; border: 1px solid #eee; text-decoration: none; color: inherit; 
+            transition: 0.4s; overflow: hidden; display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .card-img { height: 250px; background-size: cover; background-position: center; transition: 1s; }
+        .card:hover .card-img { transform: scale(1.05); }
+        .card-body { padding: 40px; text-align: center; }
+        .card h3 { font-size: 1.4rem; margin-bottom: 15px; font-weight: normal; color: var(--navy); }
+        .card p { font-size: 0.9rem; color: var(--text-light); line-height: 1.8; margin-bottom: 20px; }
+        .btn { display: inline-block; color: var(--gold); border: 1px solid var(--gold); padding: 10px 30px; font-size: 0.8rem; letter-spacing: 0.2em; }
 
-        /* --- 統合資産管理ツール (New!) --- */
-        .management-section { background-color: var(--navy); padding: 100px 0; color: #fff; }
+        /* --- 資産管理ダッシュボード --- */
+        .management-section { background-color: var(--navy); padding: 120px 0; color: #fff; }
         .mgmt-container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-        
         .mgmt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
         
-        /* 入力エリア */
         .input-card { background: var(--navy-light); padding: 40px; border: 1px solid rgba(197, 160, 89, 0.2); }
         .investment-row { margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
         .investment-row h4 { color: var(--gold); margin: 0 0 10px 0; font-size: 0.9rem; letter-spacing: 0.1em; }
         .input-flex { display: flex; gap: 15px; }
         .input-flex div { flex: 1; }
         .input-flex label { display: block; font-size: 0.65rem; color: #888; margin-bottom: 5px; }
-        .input-flex input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 8px; font-size: 0.9rem; }
+        .input-flex input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 8px; font-size: 0.9rem; outline: none; }
+        .input-flex input:focus { border-color: var(--gold); }
 
-        /* ダッシュボードエリア */
-        .dashboard-card { background: #000; padding: 40px; border: 1px solid var(--gold); position: sticky; top: 100px; }
-        .total-box { text-align: center; margin-bottom: 30px; }
-        .total-box label { font-size: 0.8rem; color: var(--gold); letter-spacing: 0.2em; }
-        .total-amount { font-size: 2.5rem; font-family: serif; margin: 10px 0; }
-        
-        .simulation-box { background: #111; padding: 20px; border-radius: 4px; margin-top: 20px; }
+        .dashboard-card { background: #000; padding: 40px; border: 1px solid var(--gold); position: sticky; top: 120px; text-align: center; }
+        .total-amount { font-size: 2.5rem; font-family: serif; color: var(--gold); margin: 15px 0; }
+        .simulation-box { background: #111; padding: 20px; margin-top: 30px; }
         .sim-row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 0.85rem; border-bottom: 1px solid #222; padding-bottom: 5px; }
         .sim-val { color: var(--gold); font-weight: bold; }
+        .calc-trigger { width: 100%; background: var(--gold-grad); color: var(--navy); border: none; padding: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; letter-spacing: 0.2em; transition: 0.3s; }
+        .calc-trigger:hover { opacity: 0.9; transform: translateY(-2px); }
 
-        .calc-trigger { width: 100%; background: var(--gold-grad); color: var(--navy); border: none; padding: 15px; font-weight: bold; cursor: pointer; margin-top: 20px; letter-spacing: 0.2em; }
+        footer { text-align: center; padding: 100px 20px; background: #050c1a; color: rgba(255,255,255,0.3); font-size: 0.7rem; letter-spacing: 0.2em; }
 
-        footer { text-align: center; padding: 80px 20px; background: #050c1a; color: rgba(255,255,255,0.3); font-size: 0.7rem; }
-
-        @media (max-width: 850px) { .mgmt-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 850px) { .grid, .mgmt-grid { grid-template-columns: 1fr; } .dashboard-card { position: static; } }
     </style>
 </head>
 <body>
@@ -80,83 +98,101 @@
     <header id="mainHeader">
         <div class="header-container">
             <div class="logo-area"><a href="#"><span class="logo-text">TAINAVI <span>VISTA</span></span></a></div>
-            <div class="menu-trigger" id="menuBtn">MENU</div>
+            <div class="menu-trigger">MENU</div>
         </div>
     </header>
 
     <div class="hero-slider">
         <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000');"></div>
         <div class="hero-content">
-            <h1>ASSET MANAGEMENT</h1>
-            <p>複数の投資を、一つの視点で。</p>
+            <h1>PREMIUM INVESTMENT</h1>
+            <p>確かな未来を、洗練されたポートフォリオと共に。</p>
         </div>
     </div>
 
     <div class="section-title"><h2>INVESTMENT SELECTION</h2></div>
     <div class="container">
         <div class="grid">
-            <div class="card"><div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600');"></div><div class="card-body"><h3>海外不動産</h3><span class="btn">VIEW MORE</span></div></div>
-            <div class="card"><div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600');"></div><div class="card-body"><h3>国内不動産</h3><span class="btn">VIEW MORE</span></div></div>
+            <a href="kaigai.html" class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800');"></div>
+                <div class="card-body">
+                    <h3>海外不動産</h3>
+                    <p>世界の成長を資産に。人口増加と経済発展の恩恵を享受する、攻めの資産形成。</p>
+                    <span class="btn">VIEW MORE</span>
+                </div>
+            </a>
+            <a href="kokunai.html" class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800');"></div>
+                <div class="card-body">
+                    <h3>国内不動産</h3>
+                    <p>確かな安定を足元に。都心一等地の流動性を背景に、堅実な守りの運用を。</p>
+                    <span class="btn">VIEW MORE</span>
+                </div>
+            </a>
+            <a href="https://www.tainavi-pp.com/lp/?gad_source=1" target="_blank" class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800');"></div>
+                <div class="card-body">
+                    <h3>太陽光発電・蓄電所</h3>
+                    <p>20年の安心を国と共に。固定価格買取制度（FIT）による、予測可能な安定収益。</p>
+                    <span class="btn">VIEW MORE</span>
+                </div>
+            </a>
+            <a href="sonota.html" class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800');"></div>
+                <div class="card-body">
+                    <h3>その他投資</h3>
+                    <p>新たな可能性を追求。市場トレンドを捉え、既存の枠にとらわれない独自の戦略。</p>
+                    <span class="btn">VIEW MORE</span>
+                </div>
+            </a>
         </div>
     </div>
 
     <section class="management-section">
         <div class="mgmt-container">
             <div class="section-title"><h2 style="color: #fff; margin-top: 0;">ASSET DASHBOARD</h2></div>
-            
             <div class="mgmt-grid">
                 <div class="input-card">
                     <div class="investment-row">
                         <h4>REAL ESTATE (不動産)</h4>
                         <div class="input-flex">
-                            <div><label>評価額</label><input type="number" id="re_val" value="30000000"></div>
+                            <div><label>現在の評価額</label><input type="number" id="re_val" value="30000000"></div>
                             <div><label>年間収益率(%)</label><input type="number" id="re_rate" value="4"></div>
                         </div>
                     </div>
-
                     <div class="investment-row">
-                        <h4>SOLAR / ENERGY (太陽光)</h4>
+                        <h4>SOLAR (太陽光)</h4>
                         <div class="input-flex">
-                            <div><label>投資額</label><input type="number" id="sol_val" value="15000000"></div>
-                            <div><label>年間収益率(%)</label><input type="number" id="sol_rate" value="9"></div>
+                            <div><label>現在の資産額</label><input type="number" id="sol_val" value="15000000"></div>
+                            <div><label>利回り(%)</label><input type="number" id="sol_rate" value="9"></div>
                         </div>
                     </div>
-
                     <div class="investment-row">
-                        <h4>STOCKS / TRUST (証券)</h4>
+                        <h4>STOCKS (証券・積立)</h4>
                         <div class="input-flex">
-                            <div><label>保有残高</label><input type="number" id="st_val" value="5000000"></div>
+                            <div><label>現在の残高</label><input type="number" id="st_val" value="5000000"></div>
                             <div><label>月間積立額</label><input type="number" id="st_add" value="100000"></div>
-                            <div><label>期待利回り(%)</label><input type="number" id="st_rate" value="5"></div>
+                            <div><label>利回り(%)</label><input type="number" id="st_rate" value="5"></div>
                         </div>
                     </div>
-
                     <div class="investment-row">
-                        <h4>CASH (現金・その他)</h4>
+                        <h4>CASH (現金)</h4>
                         <div class="input-flex">
                             <div><label>現在の残高</label><input type="number" id="cash_val" value="3000000"></div>
                         </div>
                     </div>
-
                     <button class="calc-trigger" onclick="runComprehensiveSim()">解析・シミュレーション実行</button>
                 </div>
 
                 <div class="dashboard-card">
-                    <div class="total-box">
-                        <label>CURRENT TOTAL ASSETS</label>
-                        <div class="total-amount" id="display_total">¥ 53,000,000</div>
-                    </div>
-
+                    <label style="color: var(--gold); letter-spacing: 0.2em; font-size: 0.8rem;">CURRENT TOTAL ASSETS</label>
+                    <div class="total-amount" id="display_total">¥ 0</div>
                     <div class="simulation-box">
-                        <h4 style="font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; border-bottom: 1px solid #333; padding-bottom: 10px;">FUTURE PROJECTION (予測)</h4>
+                        <h4 style="font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;">FUTURE PROJECTION</h4>
                         <div class="sim-row"><span>5年後</span><span class="sim-val" id="y5">--</span></div>
                         <div class="sim-row"><span>10年後</span><span class="sim-val" id="y10">--</span></div>
                         <div class="sim-row"><span>20年後</span><span class="sim-val" id="y20">--</span></div>
                     </div>
-                    
-                    <p style="font-size: 0.6rem; color: #555; margin-top: 20px; line-height: 1.5;">
-                        ※各資産の利回りは複利として再投資される前提で算出しています。税金や諸経費は考慮されておりません。
-                    </p>
                 </div>
             </div>
         </div>
@@ -165,40 +201,27 @@
     <footer>&copy; 2026 TAINAVI VISTA. ALL RIGHTS RESERVED.</footer>
 
     <script>
-        // 総合計算ロジック
         function runComprehensiveSim() {
-            // 各値の取得
             const re_v = parseFloat(document.getElementById('re_val').value) || 0;
             const re_r = (parseFloat(document.getElementById('re_rate').value) || 0) / 100;
-            
             const sol_v = parseFloat(document.getElementById('sol_val').value) || 0;
             const sol_r = (parseFloat(document.getElementById('sol_rate').value) || 0) / 100;
-            
             const st_v = parseFloat(document.getElementById('st_val').value) || 0;
             const st_a = parseFloat(document.getElementById('st_add').value) || 0;
             const st_r = (parseFloat(document.getElementById('st_rate').value) || 0) / 100;
-            
             const cash = parseFloat(document.getElementById('cash_val').value) || 0;
 
-            // 現在の合計
             const currentTotal = re_v + sol_v + st_v + cash;
             document.getElementById('display_total').innerText = '¥ ' + currentTotal.toLocaleString();
 
-            // 将来予測 (年次ループ)
             function predict(targetYears) {
-                let future_re = re_v;
-                let future_sol = sol_v;
-                let future_st = st_v;
-
+                let f_re = re_v, f_sol = sol_v, f_st = st_v;
                 for(let i=0; i < targetYears; i++) {
-                    future_re = future_re * (1 + re_r);
-                    future_sol = future_sol * (1 + sol_r);
-                    // 証券は月次積立を考慮
-                    for(let m=0; m<12; m++) {
-                        future_st = (future_st + st_a) * (1 + (st_r/12));
-                    }
+                    f_re *= (1 + re_r);
+                    f_sol *= (1 + sol_r);
+                    for(let m=0; m<12; m++) { f_st = (f_st + st_a) * (1 + (st_r/12)); }
                 }
-                return Math.floor(future_re + future_sol + future_st + cash);
+                return Math.floor(f_re + f_sol + f_st + cash);
             }
 
             document.getElementById('y5').innerText = '¥ ' + predict(5).toLocaleString();
@@ -206,10 +229,7 @@
             document.getElementById('y20').innerText = '¥ ' + predict(20).toLocaleString();
         }
 
-        // 初期実行
         window.onload = runComprehensiveSim;
-
-        // ヘッダースクロール
         window.addEventListener('scroll', () => {
             const header = document.getElementById('mainHeader');
             if (window.scrollY > 50) header.classList.add('scrolled');
